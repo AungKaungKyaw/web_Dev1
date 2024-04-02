@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination</title>
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+        .pagination button {
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            margin: 0 4px;
+        }
+        .pagination button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="pagination" id="pagination">
+    <button id="prev" onclick="prevPage()">Prev</button>
+    <button id="page1" onclick="changePage(1)">1</button>
+    <button id="page2" onclick="changePage(2)">2</button>
+    <button id="page3" onclick="changePage(3)">3</button>
+    <button id="next" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    let currentPage = 1;
+    let numPages = 10; // total number of pages
+
+    function changePage(pageNumber) {
+        currentPage = pageNumber;
+        updatePagination();
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            updatePagination();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < numPages) {
+            currentPage++;
+            updatePagination();
+        }
+    }
+
+    function updatePagination() {
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+
+        if (currentPage === 1) {
+            prevButton.disabled = true;
+        } else {
+            prevButton.disabled = false;
+        }
+
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = ''; // Clear existing buttons
+
+        let startPage = Math.max(1, currentPage - 1);
+        let endPage = Math.min(numPages, startPage + 2);
+
+        if (endPage - startPage < 2) {
+            startPage = Math.max(1, endPage - 2);
+        }
+
+        // Add previous button
+        const prevButtonElement = document.createElement('button');
+        prevButtonElement.textContent = 'Prev';
+        prevButtonElement.onclick = prevPage;
+        pagination.appendChild(prevButtonElement);
+
+        // Add page buttons
+        for (let i = startPage; i <= endPage; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            if (i === currentPage) {
+                pageButton.classList.add('active');
+            }
+            pageButton.onclick = () => changePage(i);
+            pagination.appendChild(pageButton);
+        }
+
+        // Add next button
+        const nextButtonElement = document.createElement('button');
+        nextButtonElement.textContent = 'Next';
+        nextButtonElement.onclick = nextPage;
+        pagination.appendChild(nextButtonElement);
+
+        // Disable next button if currentPage is the last page
+        if (currentPage === numPages) {
+            nextButton.disabled = true;
+        } else {
+            nextButton.disabled = false;
+        }
+    }
+
+    updatePagination(); // Initial call to set up pagination
+</script>
+
+</body>
+</html>
