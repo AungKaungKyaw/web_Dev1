@@ -25,6 +25,13 @@ function setActive(){
         link.classList.remove('active');
         console.log(link.getAttribute('value'));
     })
+    link.forEach(link=>{
+        if(link.getAttribute('value') == currentpage){
+            output.innerHTML = "match";
+            link.classList.add('active');
+        }
+    })
+
 }
 function activeLinkPage(val){
     if(val === "next"){
@@ -40,9 +47,10 @@ function activeLinkPage(val){
 
             for(let i = 0; i < 3; i++){
                 // link[i].classList.add('active');
-                // link[i].setAttribute('value', currentpage + i);
-                link[i].innerHTML = currentpage + i;
+                link[i].setAttribute('value', currentpage + i +1);
+                link[i].innerHTML = currentpage + i +1;
             }
+
         }
         currentpage++;
         setActive();
