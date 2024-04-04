@@ -1,4 +1,4 @@
-function click1(){
+/*function click1(){
     const url = 'http://localhost/pp2/untitled/testing.php';
     xhr = new XMLHttpRequest();
     xhr.open("GET", "");
@@ -8,7 +8,7 @@ function click1(){
             document.getElementById("demo").innerHTML = xhr.responseText;
         }
     }
-}
+}*/
 const output = document.getElementById('output');
 
 const link = document.querySelectorAll(".linkPaginating");
@@ -21,7 +21,10 @@ function activeLink(val){
     setActive();
 }
 function setActive(){
-
+    link.forEach(link=>{
+        link.classList.remove('active');
+        console.log(link.getAttribute('value'));
+    })
 }
 function activeLinkPage(val){
     if(val === "next"){
@@ -37,13 +40,14 @@ function activeLinkPage(val){
 
             for(let i = 0; i < 3; i++){
                 // link[i].classList.add('active');
-                link[i].setAttribute('value', currentpage + i);
+                // link[i].setAttribute('value', currentpage + i);
                 link[i].innerHTML = currentpage + i;
             }
         }
         currentpage++;
+        setActive();
     }else if(val === "prev"){
-        if(currentpage < 1){
+        if(currentpage <= 1){
             console.log("do nothing");
         }else{
             currentpage--;
